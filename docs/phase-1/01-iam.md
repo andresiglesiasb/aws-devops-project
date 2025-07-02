@@ -38,3 +38,7 @@ Create a group and a userfollowing the best practices from the start, ensuring a
 - Status: Succesfully enabled
 
 ---
+
+## Notes
+
+We will create an IAM group named TerraformAdmin and an IAM user named TerraformUser with programmatic access via an access key. The access keys will be configured for the user and passed to the AWS CLI for authentication. 
