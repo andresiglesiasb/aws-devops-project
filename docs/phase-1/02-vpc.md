@@ -77,6 +77,8 @@ This guide outlines the steps to manually set up a development VPC with a public
     - Rename this to `dev-public-rt` (or as desired)
     - In its **subnet association** section, you will see that `dev-public-1a`is already associated (no action needed) 
 
+> We only put the `dev-private-1a` subnet with the `dev-private-rt` route table because we want to prevent the private subnet from directly accessing the internet. 
+> As for the `dev-public-1a` subnet, it's implicitly associated with the VPC's main route table, which we've renamed to dev-public-rt. This route table includes a default route `0.0.0.0/0` to the Internet Gateway (IGW). Everything that doesn't have a destination within the VPC's CIDR block will go outside.
 ---
 
 ## Create Internet Gateway (IGW)
@@ -109,7 +111,7 @@ This guide outlines the steps to manually set up a development VPC with a public
 
 ---
 
-## Notes
+## Notes   
 
 **Every VPC includes an internal router managed by AWS.**
 
