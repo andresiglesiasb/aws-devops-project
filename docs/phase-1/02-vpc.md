@@ -1,6 +1,7 @@
 # VPC Setup Guide
 
 ![VPC Architecture](../../diagrams/dev-vpc.drawio.png)
+
 This guide outlines the steps to manually set up a development VPC with a public and private subnet in AWS.
 
 ## Create VPC
