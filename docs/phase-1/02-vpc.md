@@ -70,7 +70,7 @@ This guide outlines the steps to manually set up a development VPC with a public
     - Choose `dev-private-1a`
     - Save associations
 
-![Subnet Association](../../assets/)
+![Subnet Association](../../assets/private-subnet-association.png)
 
 3. **Public Route Table**
     - AWS creates a default route table under the name `-`
