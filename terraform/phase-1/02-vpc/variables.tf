@@ -10,6 +10,11 @@ variable "private_subnet_cidr" {
     default = "10.0.2.0/24"
 }
 
+variable "private_subnet_with_nat_cidr" {
+    default = "10.0.3.0/24"
+}
+
+
 variable "availability_zone" {
-    default = "us-east-1a"
+    default = "eu-west-2a"
 }

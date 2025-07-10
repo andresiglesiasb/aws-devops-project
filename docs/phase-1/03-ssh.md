@@ -7,7 +7,7 @@ Create a secure SSH key pair to access EC2 instances.
 
 1. In the AWS Console, go to:
     **EC2 → Key Pairs → Create key pair**
-    - **Key pair name:** `devops-key`
+    - **Key pair name:** `dev-key`
     - Leave the rest as default settings
 
 ![Key-pairs options](../../assets/key-pairs.png)

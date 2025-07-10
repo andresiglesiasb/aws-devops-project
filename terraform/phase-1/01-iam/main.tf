@@ -1,9 +1,11 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "eu-west-1a"
   profile = "terraform-iam"
 }
 
-# IAM Group
+# -------------------------------
+# IAM GROUP
+# -------------------------------
 resource "aws_iam_group" "devops_student_group" {
   name = "devops-student-group-test"
 }
@@ -34,7 +36,9 @@ resource "aws_iam_group_policy_attachment" "cloudwatch_readonly" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchReadOnlyAccess"
 }
 
-# IAM User
+# -------------------------------
+# IAM USER
+# -------------------------------
 resource "aws_iam_user" "devops_student" {
   name = "devops-student-test"
   force_destroy = true # Allows deletion in "cascade" of the user, without it terra will fail if the user has resources attached

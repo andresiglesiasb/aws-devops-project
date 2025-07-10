@@ -9,7 +9,7 @@ This guide outlines the steps to manually set up a development VPC with a public
 
 ## A. Create VPC
 
-1. Go to **Create VPC**
+1. Go to **Create VPC** (VPC only)
     - **Name:** `dev-vpc`
     - **IPv4 CIDR Block:** `10.0.0.0/16`
     - Click **Create VPC**
@@ -18,6 +18,18 @@ This guide outlines the steps to manually set up a development VPC with a public
     - Go to **Actions → Edit VPC settings → Enable DNS hostnames**
 
 ![Enable DNS Hostnames](../../assets/enable-dns-hostnames.png)
+
+```hcl
+# vpc.tf
+resource "aws_vpc" "dev" {
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_hostnames = true
+
+  tags = {
+    Name = "dev-vpc"
+  }
+}
+```
 
 > Enabling **DNS hostnames** allows instances within the VPC to receive **public DNS names** 
 > This is quite usefull for public subnets, where instances need to be reacheable from the internet. Without DNS hostnames enabled, even if an instance has a public IP, it won't have a public DNS names, making remote access and service that depend on DNS more difficult.
@@ -34,18 +46,57 @@ This guide outlines the steps to manually set up a development VPC with a public
 ## B. Create Subnets
 
 1. **Public Subnet**
-    - **Name:** `dev-publi-1a`
-    - **Availability Zone:** N.Virginia (`us-east-1a`)
+    - **Name:** `dev-public-1a`
+    - **Availability Zone:** Ireland (`eu-west-1a`)
     - **IPv4 VPC CIDR block:** `10.0.0.0/16`
     - **Ipv4 Subnet CIDR block:** `10.0.1.0/24`
 
+```hcl
+resource "aws_subnet" "public_subnet" {
+    vpc_id = aws_vpc.dev_vpc.id
+    cidr_block = "10.0.1.0/24"
+    map_public_ip_on_launch = true
+    availability_zone = "eu-west-1a"
+    tags = {
+        Name = "dev-public-1a"
+    }
+}
+```
+
 2. **Private Subnet**
     - **Name:** `dev-private-1a`
-    - **Availability Zone:** N.Virginia (`us-east-1a`)
+    - **Availability Zone:** Ireland (`eu-west-1a`)
     - **IPv4 VPC CIDR block:** `10.0.0.0/16`
     - **IPv4 Subnet CIDR block:** `10.0.2.0/24`
 
-3. After subnet creation:
+```hcl
+resource "aws_subnet" "private_subnet" {
+    vpc_id = aws_vpc.dev_vpc.id
+    cidr_block = "10.0.2.0/24"
+    availability_zone = "eu-west-1a"
+    tags = {
+        Name = "dev-private-1a"
+    }
+}
+```
+3. **Private Subnet with Nat**
+    - **Name:** `dev-private-with-nat-1a`
+    - **Availability Zone:** Ireland (`eu-west-1a`)
+    - **IPv4 VPC CIDR block:** `10.0.0.0/16`
+    - **IPv4 Subnet CIDR block:** `10.0.3.0/24`
+
+```hcl
+resource "aws_subnet" "private_subnet_with_nat" {
+    vpc_id = aws_vpc.dev_vpc.id
+    cidr_block = "10.0.3.0/24"
+    availability_zone = "eu-west-1a"
+    tags = {
+        Name = "dev-private-with-nat-1a"
+    }
+}
+```
+
+4. After subnet creation:
     - For 'dev-public-1a`, go to **Actions → Edit subnet settings**
     - Enable **Auto-assign public IPv4 address**
     -Click **Save**
@@ -59,6 +110,9 @@ This guide outlines the steps to manually set up a development VPC with a public
 > In contrast, **private subnets** do **not** have internet access directly.  
 > Giving them public IPs is not only unnecessary it also defeats the purpose of network isolation in private subnets.
 
+> The dev-private-with-nat-1a subnet was created to divide the private subnets into two: one with internet access and one without.
+> This separation helps isolate resources that do not require internet connectivity, improving security and reducing exposure.
+
 ---
 
 ## C. Create Route Tables
@@ -71,7 +125,7 @@ This guide outlines the steps to manually set up a development VPC with a public
 2. Associate subnet:
     - Go to **Subnet associations**
     - Click **Edit subnet associations** of the **Explicit subnet associations** part
-    - Choose `dev-private-1a`
+    - Choose `dev-private-1a` and `dev-private-with-nat-1a`
     - Save associations
 
 ![Subnet Association](../../assets/private-subnet-association.png)
@@ -81,8 +135,44 @@ This guide outlines the steps to manually set up a development VPC with a public
     - Rename this to `dev-public-rt` (or as desired)
     - In its **subnet association** section, you will see that `dev-public-1a`is already associated (no action needed) 
 
-> We only put the `dev-private-1a` subnet with the `dev-private-rt` route table because we want to prevent the private subnet from directly accessing the internet. 
+>We assign both private subnets — `dev-private-1a` and `dev-private-with-nat-1a` — to the dev-private-rt route table **for now,** to keep them isolated from the internet.
+> Later, we will configure a **NAT Gateway** with an **Elastic IP**, and create a dedicated route table for it. At that point, the `dev-private-with-nat-1a` subnet will be reassigned to the new route table that routes traffic to the NAT Gateway.
 > As for the `dev-public-1a` subnet, it's implicitly associated with the VPC's main route table, which we've renamed to dev-public-rt. This route table includes a default route `0.0.0.0/0` to the Internet Gateway (IGW). Everything that doesn't have a destination within the VPC's CIDR block will go outside.
+```hcl
+resource "aws_route_table" "public_rt" {
+    vpc_id = aws_vpc.dev_vpc.id
+    route {
+        cidr_block = "0.0.0.0/0"
+        gateway_id = aws_internet_gateway.igw.id
+    }
+    tags = {
+        Name = "dev-public-rt"
+    }
+}
+
+resource "aws_route_table_association" "public" {
+    subnet_id = aws_subnet.public_subnet.id
+    route_table_id = aws_route_table.public_rt.id
+}
+
+resource "aws_route_table" "private_rt" {
+    vpc_id = aws_vpc.dev_vpc.id
+    tags = {
+      Name = "dev-private-rt"
+    }
+}
+
+resource "aws_route_table_association" "private" {
+    subnet_id = aws_subnet.private_subnet.id
+    route_table_id = aws_route_table.private_rt.id
+}
+
+resource "aws_route_table_association" "private" {
+    subnet_id = aws_subnet.private_subnet_with_nat.id
+    route_table_id = aws_route_table.private_rt.id
+}
+```
+
 
 ---
 
@@ -96,6 +186,15 @@ This guide outlines the steps to manually set up a development VPC with a public
     - Go to ** Actions → Attach to VPC**
     - Select VPC: `dev-vpc`
     - Click **Attach**
+
+```hcl
+resource "aws_internet_gateway" "igw" {
+    vpc_id = aws_vpc.dev_vpc.id
+    tags = {
+        Name = "dev-igw"
+    }
+}
+```
 
 ---
 
@@ -114,6 +213,19 @@ This guide outlines the steps to manually set up a development VPC with a public
 
 3. Click **Save changes**
 
+```hcl
+resource "aws_route_table" "public_rt" {
+    vpc_id = aws_vpc.dev_vpc.id
+    route {
+        cidr_block = "0.0.0.0/0"
+        gateway_id = aws_internet_gateway.igw.id
+    }
+    tags = {
+        Name = "dev-public-rt"
+    }
+}
+```
+
 ---
 
 ## Notes   
@@ -124,3 +236,5 @@ This guide outlines the steps to manually set up a development VPC with a public
 - You don't create it manually, it's automatically included when you create a VPC.
 - It uses the **route tables** to determine how to forward traffic, whether it's within the VPC or going out to the internet.
 
+## Terraform
+[View Terraform(VPC)](https://github.com/andresiglesiasb/aws-devops-project/tree/phase-1-infra/terraform/phase-1/02-vpc)

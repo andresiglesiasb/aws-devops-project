@@ -16,3 +16,12 @@ resource "aws_subnet" "private_subnet" {
         Name = "dev-private-1a"
     }
 }
+
+resource "aws_subnet" "private_subnet_with_nat" {
+    vpc_id = aws_vpc.dev_vpc.id
+    cidr_block = var.private_subnet_with_nat_cidr
+    availability_zone = var.availability_zone
+    tags = {
+        Name = "dev-private-with-nat-1a"
+    }
+}
