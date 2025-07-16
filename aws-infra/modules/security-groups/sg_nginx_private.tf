@@ -1,7 +1,7 @@
 resource "aws_security_group" "nginx_private" {
     name = "dev-sg-nginx-private"
     description = "Allows SSH from Bastion and HTTP from Load Balanacer (LB)"
-    vpc_id = data.terraform_remote_state.vpc.outputs.vpc_id
+    vpc_id = var.vpc_id
 
     ingress {
         description = "SSH from Bastion"

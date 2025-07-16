@@ -1,7 +1,7 @@
 resource "aws_security_group" "bastion" {
     name = "dev-sg-bastion"
     description = "Allows SSH access from your personal IP"
-    vpc_id = data.terraform_remote_state.vpc.outputs.vpc_id
+    vpc_id = var.vpc_id
 
     ingress {
         description = "SSH from my IP"

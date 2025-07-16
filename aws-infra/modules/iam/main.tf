@@ -1,8 +1,3 @@
-provider "aws" {
-  region = "eu-west-1a"
-  profile = "terraform-iam"
-}
-
 # -------------------------------
 # IAM GROUP
 # -------------------------------

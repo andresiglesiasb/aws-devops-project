@@ -25,3 +25,9 @@ chmod 400 devops-key.pem
 
 > ⚠️ Run these commands as your normal user not as **root**.
 > Using `chmod 400` ensures only your user can read the key.
+
+---
+
+## Notes   
+
+> Later on, we will associate this SSH key with the EC2 instances we need. Generating the key through AWS provides a simpler way to configure SSH access, compared to creating one locally and adding it manually.

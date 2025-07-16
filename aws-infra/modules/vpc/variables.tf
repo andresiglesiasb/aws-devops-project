@@ -16,5 +16,5 @@ variable "private_subnet_with_nat_cidr" {
 
 
 variable "availability_zone" {
-    default = "eu-west-2a"
+    default = "eu-west-1a"
 }

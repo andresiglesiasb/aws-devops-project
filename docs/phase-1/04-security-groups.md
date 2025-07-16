@@ -1,4 +1,4 @@
-# Phase 1 - Step 3: Security Groups
+# Phase 1 - Step 4: Security Groups
 
 ## Objective
 Configure two security groups to control access to the **public** and **private** subnets within the VPC.
@@ -47,3 +47,6 @@ Configure two security groups to control access to the **public** and **private*
 
 > ⚠️ You will later add an inbound rule to allow **HTTP (port 80)** traffic **from the Load Balancer**.  
 > This requires the Load Balancer’s security group to be created first.
+
+## Terraform
+[View Terraform(SG)](https://github.com/andresiglesiasb/aws-devops-project/tree/phase-1-infra/terraform/phase-1/04-security-groups)
