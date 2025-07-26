@@ -49,4 +49,4 @@ Configure two security groups to control access to the **public** and **private*
 > This requires the Load Balancer’s security group to be created first.
 
 ## Terraform
-[View Terraform(SG)](https://github.com/andresiglesiasb/aws-devops-project/tree/phase-1-infra/terraform/phase-1/04-security-groups)
+[View Terraform(SG)](../../aws-infra/modules/security-groups/)

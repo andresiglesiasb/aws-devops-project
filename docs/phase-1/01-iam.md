@@ -108,4 +108,4 @@ This user will authenticate via AWS CLI using programmatic access (access keys).
 ---
 
 ## Terraform
-[View Terraform(IAM)](https://github.com/andresiglesiasb/aws-devops-project/tree/phase-1-infra/terraform/phase-1/01-iam)
+[View Terraform(IAM)](../../aws-infra/modules/iam)

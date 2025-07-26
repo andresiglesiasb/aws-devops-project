@@ -237,4 +237,4 @@ resource "aws_route_table" "public_rt" {
 - It uses the **route tables** to determine how to forward traffic, whether it's within the VPC or going out to the internet.
 
 ## Terraform
-[View Terraform(VPC)](https://github.com/andresiglesiasb/aws-devops-project/tree/phase-1-infra/terraform/phase-1/02-vpc)
+[View Terraform(VPC)](../../aws-infra/modules/vpc/)

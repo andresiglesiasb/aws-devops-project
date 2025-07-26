@@ -88,7 +88,7 @@ After launching:
 
 ```bash
 ssh -i devops-key.pem ubuntu@<YOUR_PUBLIC_IP>
-```
+```s
 
 ## Terraform
-[View Terraform(bastion)](https://github.com/andresiglesiasb/aws-devops-project/tree/phase-1-infra/terraform/phase-1/05-ec2-bastion)
+[View Terraform(bastion)](../../aws-infra/modules/bastion/)
