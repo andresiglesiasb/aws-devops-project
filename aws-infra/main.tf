@@ -32,3 +32,11 @@ module "bastion" {
         aws = aws.perfil-network
     }
 }
+
+module "auto-shutdown" {
+    source = "./modules/auto-shutdown"
+    
+    providers = {
+        aws = aws.perfil-autoshutdown
+    }
+}
