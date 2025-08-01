@@ -20,9 +20,10 @@ resource "aws_security_group" "nginx_private" {
         cidr_blocks = ["0.0.0.0/0"]
     }
 
-    tags = {
-        Name = "dev-sg-nginx-private"
-    }
-
-  
+    tags = merge(
+        var.common_tags,
+        {
+            Name = "dev-sg-nginx-private"
+        }
+    )
 }

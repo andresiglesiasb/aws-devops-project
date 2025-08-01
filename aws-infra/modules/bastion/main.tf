@@ -6,10 +6,13 @@ resource "aws_instance" "bastion" {
   associate_public_ip_address = true
   vpc_security_group_ids = [var.bastion_sg_id]
 
-  tags = {
-    Name = "dev-bastion-ec2"
-  }
-
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "dev-bastion-ec2"
+    }
+  )
+  
   root_block_device {
     volume_size = 8
     volume_type = "gp3"

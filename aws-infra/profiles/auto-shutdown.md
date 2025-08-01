@@ -33,7 +33,8 @@ This guide explains how to create a secure IAM user and permissions required to 
 				"iam:DetachRolePolicy",
 				"iam:ListRolePolicies",
 				"iam:ListAttachedRolePolicies",
-				"iam:ListInstanceProfilesForRole"
+				"iam:ListInstanceProfilesForRole",
+				"iam:TagRole"
 			],
 			"Resource": "*"
 		},
@@ -50,7 +51,8 @@ This guide explains how to create a secure IAM user and permissions required to 
 				"lambda:RemovePermission",
 				"lambda:ListVersionsByFunction",
 				"lambda:GetFunctionCodeSigningConfig",
-				"lambda:GetPolicy"
+				"lambda:GetPolicy",
+				"lambda:TagResource"
 			],
 			"Resource": "*"
 		},
@@ -64,7 +66,8 @@ This guide explains how to create a secure IAM user and permissions required to 
 				"events:PutTargets",
 				"events:RemoveTargets",
 				"events:ListTagsForResource",
-				"events:ListTargetsByRule"
+				"events:ListTargetsByRule",
+				"events:TagResource"
 			],
 			"Resource": "*"
 		},

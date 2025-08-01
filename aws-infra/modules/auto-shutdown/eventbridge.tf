@@ -2,6 +2,7 @@ resource "aws_cloudwatch_event_rule" "shutdown_schedule" {
   name                = "shutdown-ec2-daily"
   description         = "Shutdowns all ec2 instances at exact time"
   schedule_expression = var.schedule_expression
+  tags = var.common_tags
 }
 
 resource "aws_cloudwatch_event_target" "lambda_target" {

@@ -1,5 +1,6 @@
 resource "aws_iam_role" "lambda_ec2_shutdown" {
   name = var.lambda_role_name
+  tags = var.common_tags
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
