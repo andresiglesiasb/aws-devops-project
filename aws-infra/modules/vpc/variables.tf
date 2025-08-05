@@ -18,3 +18,8 @@ variable "private_subnet_with_nat_cidr" {
 variable "availability_zone" {
     default = "eu-west-1a"
 }
+
+variable "common_tags" {
+  type    = map(string)
+  default = {}
+}

@@ -4,6 +4,8 @@ module "iam" {
     providers = {
         aws = aws.perfil-iam
     }
+
+    common_tags = local.tags_phase1
 }
 
 module "vpc" {
@@ -12,6 +14,8 @@ module "vpc" {
     providers = {
         aws = aws.perfil-network
     }
+
+    common_tags = local.tags_phase1
 }
 
 module "security-groups" {
@@ -21,6 +25,8 @@ module "security-groups" {
     providers = {
         aws = aws.perfil-network
     }
+
+    common_tags = local.tags_phase1
 }
 
 module "bastion" {
@@ -31,4 +37,16 @@ module "bastion" {
     providers = {
         aws = aws.perfil-network
     }
+
+    common_tags = local.tags_phase1
+}
+
+module "auto-shutdown" {
+    source = "./modules/auto-shutdown"
+    
+    providers = {
+        aws = aws.perfil-autoshutdown
+    }
+
+    common_tags = local.tags_phase1
 }
