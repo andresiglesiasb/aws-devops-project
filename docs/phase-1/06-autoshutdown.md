@@ -139,3 +139,5 @@ def lambda_handler(event, context):
 ```
 ![test-lambda](../../assets/TestLambda.png)
 
+## Terraform
+[View Terraform(autoshutdown)](../../aws-infra/modules/auto-shutdown/)
