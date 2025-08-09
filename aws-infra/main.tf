@@ -50,3 +50,30 @@ module "auto-shutdown" {
 
     common_tags = local.tags_phase1
 }
+
+module "nat_ec2_gateway" {
+    source            = "./modules/instance-gateway"
+    ami_id            = "ami-01f23391a59163da9"
+    subnet_id         = module.vpc.dev_public_subnet_id_1a
+    security_group_id = module.security-groups.gateway_sg_id
+    key_name          = "dev-key"
+    name              = "dev-gateway-ec2"
+    volume_size       = 8
+    
+    providers = {
+        aws = aws.perfil-network
+    }
+
+    common_tags = local.tags_phase1
+}
+
+resource "aws_route" "private_nat_route" {
+    route_table_id = module.vpc.private_route_table_id
+    destination_cidr_block = "0.0.0.0/0"
+    network_interface_id = module.nat_ec2_gateway.nat_network_interface_id
+
+    depends_on = [ 
+        module.nat_ec2_gateway
+    ]
+    # This is to secure that the Terraform does not attemps to create the route before the NAT EC2 exists
+}
