@@ -10,7 +10,7 @@ resource "aws_instance" "nat" {
   tags = merge(
     var.common_tags,
     {
-      Name = "dev-bgateway-ec2"
+      Name = "dev-gateway-ec2"
     }
   )
 
@@ -19,6 +19,13 @@ resource "aws_instance" "nat" {
     volume_size = var.volume_size
     delete_on_termination = true
   }
+
+  # The following script configures the EC2 instance to act as a NAT gateway by:
+  # 1. Enabling IPv4 packet forwarding
+  # 2. Making the above configuration persistent across reboots by adding 'net.ipv4.ip_forward=1' to /etc/sysctl.conf
+  # 3. Configuring NAT masquerading on the eth0 interface to allow other instances to access the Internet
+  # 4. Updating package lists and installing iptables-persistent
+  # 5. Saving the current iptables rules for automatic restoration after reboot
 
   user_data = <<-EOF
               #!/bin/bash
