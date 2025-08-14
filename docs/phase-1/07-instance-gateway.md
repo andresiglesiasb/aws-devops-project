@@ -108,7 +108,7 @@ sudo sysctl -p
 
 ### 3. Set up iptables MASQUERADE rule
 ```bash
-sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -o enX0 -s 10.0.2.0/24 -j MASQUERADE
 ```
 
 ### 4. Install iptables-persistent (to make the rules persist after the reboot)
