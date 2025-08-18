@@ -25,7 +25,8 @@ Create a low-cost NAT Gateway using an EC2 instance in the public subnet to allo
 ### 3. Add **Inbound rules**:
 | Type         | Protocol | Port Range | Source                               | Description            |
 |--------------|----------|------------|--------------------------------------|------------------------|
-| SSH          | TCP      | 22         | Your IP (e.g., `X.X.X.X/32`)         | For SSH access only     |
+| SSH          | TCP      | 22         | Your IP (e.g., `X.X.X.X/32`)         | For SSH access only    |
+| All traffic  | All      | All        | Custom `10.0.2.0/24`                 |                        |
 
 ### 4. Add **Outbound rules**:
 | Type         | Protocol | Port Range | Destination | Description        |

@@ -11,6 +11,13 @@ resource "aws_security_group" "gateway" {
         cidr_blocks = ["${chomp(data.http.my_ip.response_body)}/32"]
     }
 
+    ingress {
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["10.0.2.0/24"]
+    }
+
     egress {
         from_port = 0
         to_port = 0
