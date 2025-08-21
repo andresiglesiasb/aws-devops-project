@@ -1,5 +1,7 @@
 # Phase 1 - Step 8: EC2 Nginx
 
+![VPC Architecture-2](../../diagrams/NGINX.png)
+
 ## Objective
 
 Create an instance in the private subnet and install nginx in it.
