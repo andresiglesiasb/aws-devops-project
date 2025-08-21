@@ -45,5 +45,35 @@ output "nginx_private_sg_id" {
 # BASTION OUTPUTS
 # -------------------------------
 output "bastion_public_ip" {
-    value = module.bastion.bastion_public_ip
+  value = module.bastion.bastion_public_ip
+}
+
+# -------------------------------
+# AUTO-SHUTDOWN OUTPUTS
+# -------------------------------
+output "lambda_function_name" {
+  value = module.auto-shutdown.lambda_function_name
+}
+
+output "eventbridge_rule_name" {
+  value = module.auto-shutdown.eventbridge_rule_name
+}
+
+# -------------------------------
+# INSTANCE-GATEWAY OUTPUTS
+# -------------------------------
+output "nat_instance_id" {
+  value = module.nat_ec2_gateway.nat_instance_id
+}
+
+output "nat_private_ip" {
+  value = module.nat_ec2_gateway.nat_private_ip
+}
+
+output "nat_public_ip" {
+  value = module.nat_ec2_gateway.nat_public_ip
+}
+
+output "nat_network_interface_id" {
+  value = module.nat_ec2_gateway.nat_network_interface_id
 }

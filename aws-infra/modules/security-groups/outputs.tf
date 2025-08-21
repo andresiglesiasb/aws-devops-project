@@ -5,3 +5,7 @@ output "bastion_sg_id" {
 output "nginx_private_sg_id" {
   value = aws_security_group.nginx_private.id
 }
+
+output "gateway_sg_id" {
+  value = aws_security_group.gateway.id
+}

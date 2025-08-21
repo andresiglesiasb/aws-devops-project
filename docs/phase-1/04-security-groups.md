@@ -14,10 +14,9 @@ Configure two security groups to control access to the **public** and **private*
     -**Description:** Allows SSH access from your personal IP
     -**VPC:** Select `dev-vpc` (created earlier)
     -**Inbound rules:** 
-        -**Type:** SSH
-        -**Protocol:** TCP
-        -**Port range:** 22
-        -**Source:** My IP
+    | Type         | Protocol | Port Range | Source                               | Description            |
+    |--------------|----------|------------|--------------------------------------|------------------------|
+    | SSH          | TCP      | 22         | Your IP (e.g., `X.X.X.X/32`)         | For SSH access only    |
     -**Outbound rules:** Let the default rule (All traffic allowed)
 
 2. Click on `Create security group`
@@ -35,12 +34,16 @@ Configure two security groups to control access to the **public** and **private*
     -**Description:** Allows SSH from Bastion and allows HTTP from the Load Balancer
     -**VPC:** Select `dev-vpc` (created earlier)
     -**Inbound rules:** 
-        - **Type:** SSH
-        - **Protocol:** TCP
-        - **Port Range:** 22
-        - **Source:** Will be `sg-bastion` *(you can leave this for now and update after both SGs are created)*
-    -**Outbound rules:** Let the default rule (All traffic allowed)
+    | Type         | Protocol | Port Range | Source                               | Description            |
+    |--------------|----------|------------|--------------------------------------|------------------------|
+    | SSH          | TCP      | 22         | Bastion SG                           | For SSH access only    |
+    | HTTP         | TCP      | 80         | Custom `10.0.0.0/16`                 |                        |
+    | HTTPS        | TCP      | 443        | Custom `10.0.0.0/16`                 |                        |        
 
+    -**Outbound rules:** Let the default rule (All traffic allowed)
+    | Type         | Protocol | Port Range | Destination | Description        |
+    |--------------|----------|------------|-------------|--------------------|
+    | All traffic  | All      | All        | `0.0.0.0/0` | Allow all outbound |
 2. Click on `Create security group`
 
 ![sg-nginx-private](../../assets/sg-nginx-private.png)

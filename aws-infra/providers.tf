@@ -15,3 +15,8 @@ provider "aws" {
     region = var.aws_region
     profile = "terraform-autoshutdown"
 }
+
+provider "aws" {
+  region  = var.aws_region
+  profile = "terraform-network"
+}

@@ -9,3 +9,7 @@ output "dev_igw" {
 output "dev_public_subnet_id_1a" {
     value = aws_subnet.public_subnet.id
 }
+
+output "private_route_table_id" {
+    value = aws_route_table.private_rt.id
+}
