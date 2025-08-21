@@ -77,3 +77,10 @@ output "nat_public_ip" {
 output "nat_network_interface_id" {
   value = module.nat_ec2_gateway.nat_network_interface_id
 }
+
+# -------------------------------
+# NGINX OUTPUTS
+# -------------------------------
+output "nginx_private_ip" {
+  value = module.nginx.nginx_private_ip
+}

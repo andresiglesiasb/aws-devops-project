@@ -77,3 +77,15 @@ resource "aws_route" "private_nat_route" {
     ]
     # This is to secure that the Terraform does not attemps to create the route before the NAT EC2 exists
 }
+
+module "nginx" {
+    source = "./modules/nginx"
+    nginx_sg_id = module.security-groups.nginx_private_sg_id
+    dev_private_subnet_id_1a = module.vpc.dev_private_subnet_id_1a
+
+    providers = {
+        aws = aws.perfil-network
+    }
+
+    common_tags = local.tags_phase1
+}
