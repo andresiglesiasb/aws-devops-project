@@ -36,9 +36,7 @@ Configure two security groups to control access to the **public** and **private*
     -**Inbound rules:** 
     | Type         | Protocol | Port Range | Source                               | Description            |
     |--------------|----------|------------|--------------------------------------|------------------------|
-    | SSH          | TCP      | 22         | Bastion SG                           | For SSH access only    |
-    | HTTP         | TCP      | 80         | Custom `10.0.0.0/16`                 |                        |
-    | HTTPS        | TCP      | 443        | Custom `10.0.0.0/16`                 |                        |        
+    | SSH          | TCP      | 22         | Bastion SG                           | For SSH access only    |  
 
     -**Outbound rules:** Let the default rule (All traffic allowed)
     | Type         | Protocol | Port Range | Destination | Description        |
