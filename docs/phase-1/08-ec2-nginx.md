@@ -103,12 +103,7 @@ sudo systemctl start nginx
 sudo systemctl enable nginx
 sudo systemctl status nginx
 ```
-
-5. From the NAT instance
-```bash
-curl http://<PRIVATE_IP_DE_LA_INSTANCIA_NGINX>
-```
-> If everything is good you will see `Welcome to nginx!`
+> If everything is good you will see the service in `Running`state
 
 ## Terraform
 [View Terraform(bastion)](../../aws-infra/modules/nginx/)

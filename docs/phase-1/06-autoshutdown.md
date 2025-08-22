@@ -1,5 +1,7 @@
 # Phase 1 - Step 6: AutoShutdown
 
+![Autoshutdown](../../diagrams/Autoshutdown.png)
+
 ## Objective
 
 Configure auto-shutdown for your EC2 instances using AWS Lambda and EventBridge. This helps to avoid unnecessary usage charges by stopping instances automatically at a set time.
