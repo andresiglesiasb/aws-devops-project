@@ -105,5 +105,18 @@ sudo systemctl status nginx
 ```
 > If everything is good you will see the service in `Running`state
 
+To further verify that Nginx is correctly initiated, you can run a curl request to localhost on port 80 from inside the Nginx instance:
+
+```bash
+curl http://localhost:80
+```
+> If everything is good you will see an html with this title `<title>Welcome to nginx!</title>`
+
+The order to test it would be:
+
+1. `ssh` into the *bastion host*
+2. From the bastion, `ssh` into the *nginx* instance
+3. Run the `curl` command above
+
 ## Terraform
 [View Terraform(bastion)](../../aws-infra/modules/nginx/)
