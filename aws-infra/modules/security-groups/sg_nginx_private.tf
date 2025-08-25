@@ -10,21 +10,6 @@ resource "aws_security_group" "nginx_private" {
         protocol = "tcp"
         security_groups = [aws_security_group.bastion.id] # The sg of the bastion is linked to the source of the inbound rule
     }
-
-    ingress {
-        from_port = 80
-        to_port = 80
-        protocol = "tcp"
-        cidr_blocks = ["10.0.0.0/16"]
-    }
-
-    ingress {
-        from_port = 443
-        to_port = 443
-        protocol = "tcp"
-        cidr_blocks = ["10.0.0.0/16"]
-    }
-
     # The HTTP rule from the Load Balancer is going to be aggregated later
 
     egress {
