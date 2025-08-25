@@ -14,9 +14,16 @@ variable "private_subnet_with_nat_cidr" {
     default = "10.0.3.0/24"
 }
 
+variable "publicb_subnet_cidr" {
+    default = "10.0.4.0/24"
+} 
 
 variable "availability_zone" {
     default = "eu-west-1a"
+}
+
+variable "availability_zoneb" {
+    default = "eu-west-1b"
 }
 
 variable "common_tags" {
