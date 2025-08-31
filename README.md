@@ -2,12 +2,12 @@
 
 ---
 
-## Estructura del Proyecto
+## Project Structure
 
-🔹 **Documentación**  
-[Ver documentación (Phase 1)](/docs/phase-1)
+🔹 **Documentation**  
+[View Documentation (Phase 1)](/docs/phase-1)
 
-🔹 **Infraestructura como Código (IaC), Terraform**  
-[Ver Terraform (Phase 1)](/aws-infra/)
+🔹 **Infrastructure as Code (IaC), Terraform**  
+[View Terraform (Phase 1)](/aws-infra/)
 
 ---
