@@ -119,4 +119,4 @@ The order to test it would be:
 3. Run the `curl` command above
 
 ## Terraform
-[View Terraform(bastion)](../../aws-infra/modules/nginx/)
+[View Terraform(nginx)](../../aws-infra/modules/nginx/)
