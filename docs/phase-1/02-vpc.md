@@ -1,6 +1,6 @@
 # Phase 1 - Step 2: VPC Setup
 
-![VPC Architecture](../../diagrams/dev-vpc.drawio.png)
+![VPC Architecture](../../diagrams/dev-vpc.png)
 
 ## Objective
 This guide outlines the steps to manually set up a development VPC with a public and private subnet in AWS.
