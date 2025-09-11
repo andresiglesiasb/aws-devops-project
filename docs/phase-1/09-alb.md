@@ -1,4 +1,4 @@
-# Phase 1 - Step 9: EC2 Nginx
+# Phase 1 - Step 9: Application Load Balancer
 
 ![Application-Load-Balancer](../../diagrams/ALB.png)
 
