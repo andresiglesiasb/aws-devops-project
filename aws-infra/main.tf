@@ -33,6 +33,7 @@ module "bastion" {
     source = "./modules/bastion"
     bastion_sg_id = module.security-groups.bastion_sg_id
     dev_public_subnet_id_1a = module.vpc.dev_public_subnet_id_1a
+    ami_id            = "ami-01f23391a59163da9"
 
     providers = {
         aws = aws.perfil-network
@@ -82,7 +83,8 @@ module "nginx" {
     source = "./modules/nginx"
     nginx_sg_id = module.security-groups.nginx_private_sg_id
     dev_private_subnet_id_1a = module.vpc.dev_private_subnet_id_1a
-
+    ami_id = "ami-01f23391a59163da9"
+                                
     providers = {
         aws = aws.perfil-network
     }
