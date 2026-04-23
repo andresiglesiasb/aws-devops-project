@@ -30,7 +30,7 @@ From the AWS Console, open the EC2 service and click **Instances** from the left
 
 ### 3. Choose AMI (Amazon Machine Image)
 
-- Select: `Ubuntu Server 22.04 LTS (HVM), SSD Volume Type`
+- Select: `Ubuntu Server 24.04 LTS (HVM), SSD Volume Type`
 
 ![Step 3: AMI](../../assets/AMI-bastion.png)
 
