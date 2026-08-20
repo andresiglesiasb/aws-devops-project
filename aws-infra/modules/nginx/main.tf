@@ -14,9 +14,6 @@ apt-get update -y
 DEBIAN_FRONTEND=noninteractive apt-get install -y nginx
 
 JENKINS_PRIVATE_IP="${var.jenkins_private_ip}"
-if [ -z "$JENKINS_PRIVATE_IP" ]; then
-  JENKINS_PRIVATE_IP="127.0.0.1"
-fi
 
 cat <<'NGINXCONF' > /etc/nginx/sites-available/jenkins.conf
 server {
