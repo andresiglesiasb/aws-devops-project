@@ -15,25 +15,21 @@ resource "aws_instance" "nat" {
   )
 
   root_block_device {
-    volume_type = "gp3"
-    volume_size = var.volume_size
+    volume_type           = "gp3"
+    volume_size           = var.volume_size
     delete_on_termination = true
   }
 
-  # The following script configures the EC2 instance to act as a NAT gateway by:
-  # 1. Enabling IPv4 packet forwarding
-  # 2. Making the above configuration persistent across reboots by adding 'net.ipv4.ip_forward=1' to /etc/sysctl.conf
-  # 3. Configuring NAT masquerading on the eth0 interface to allow other instances to access the Internet
-  # 4. Updating package lists and installing iptables-persistent
-  # 5. Saving the current iptables rules for automatic restoration after reboot
-
+  # Configures NAT masquerading at boot, detecting the outbound interface dynamically
+  # (avoids hardcoding eth0 vs enX0 which varies by instance type/generation).
   user_data = <<-EOF
-              #!/bin/bash
-              sysctl -w net.ipv4.ip_forward=1
-              echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
-              iptables -t nat -A POSTROUTING -o enX0 -s 10.0.2.0/24 -j MASQUERADE
-              apt update -y
-              apt install -y iptables-persistent
-              netfilter-persistent save
-              EOF
+    #!/bin/bash
+    sysctl -w net.ipv4.ip_forward=1
+    echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+    WAN_IF=$(ip route show default | awk '{print $5}' | head -n1)
+    iptables -t nat -A POSTROUTING -o "$WAN_IF" -s 10.0.2.0/24 -j MASQUERADE
+    apt-get update -y
+    DEBIAN_FRONTEND=noninteractive apt-get install -y iptables-persistent
+    netfilter-persistent save
+    EOF
 }
