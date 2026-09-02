@@ -5,9 +5,9 @@
 ## Project Structure
 
 🔹 **Documentation**  
-[View Documentation (Phase 1)](/docs/phase-1)
+[View Documentation](/docs/)
 
 🔹 **Infrastructure as Code (IaC), Terraform**  
-[View Terraform (Phase 1)](/aws-infra/)
+[View Terraform](/aws-infra/)
 
 ---
