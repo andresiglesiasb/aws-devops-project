@@ -45,6 +45,10 @@ output "alb_sg_id" {
   value = module.security-groups.alb_sg_id
 }
 
+output "jenkins_sg_id" {
+  value = module.security-groups.jenkins_sg_id
+}
+
 # -------------------------------
 # BASTION OUTPUTS
 # -------------------------------

@@ -134,3 +134,31 @@ module "alb" {
 
   common_tags = local.tags_phase1
 }
+    source = "./modules/alb"
+
+    vpc_id          = module.vpc.vpc_id
+    public_subnets  = [
+        module.vpc.dev_public_subnet_id_1a,
+        module.vpc.dev_public_subnet_id_1b 
+    ]
+    alb_sg_id       = module.security-groups.alb_sg_id
+    target_instance_ids = [module.nginx.nginx_instance_id] # We create a list here for the future if the program escalates
+
+    providers = {
+        aws = aws.perfil-network
+    }
+
+    common_tags = local.tags_phase1
+}
+
+module "jenkins" {
+    source = "./modules/jenkins"
+    jenkins_sg_id = module.security-groups.jenkins_sg_id
+    dev_private_subnet_id_1a = module.vpc.dev_private_subnet_id_1a
+
+    providers = {
+        aws = aws.perfil-network
+    }
+
+    common_tags = local.tags_phase1
+}
