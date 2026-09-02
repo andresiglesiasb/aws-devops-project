@@ -4,5 +4,20 @@
 *.tfstate.backup
 .terraform.lock.hcl
 *.tfvars
+*.tfvars.json
 
 **/*.zip
+
+crash.log
+crash.*.log
+
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+!force_include_override.tf
+
+manifest.json
+
+.packer.d.json

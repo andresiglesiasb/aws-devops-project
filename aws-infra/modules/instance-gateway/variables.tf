@@ -1,32 +1,32 @@
 variable "ami_id" {
-  type        = string
+  type = string
 }
 
 variable "instance_type" {
-  type        = string
-  default     = "t2.micro"
+  type    = string
+  default = "t2.micro"
 }
 
 variable "subnet_id" {
-  type        = string
+  type = string
 }
 
 variable "security_group_id" {
-  type        = string
+  type = string
 }
 
 variable "key_name" {
-  type        = string
+  type = string
 }
 
 variable "name" {
-  type        = string
-  default     = "dev-instance-ec2"
+  type    = string
+  default = "dev-instance-ec2"
 }
 
 variable "volume_size" {
-  type        = number
-  default     = 8
+  type    = number
+  default = 8
 }
 
 variable "common_tags" {

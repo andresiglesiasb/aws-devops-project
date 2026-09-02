@@ -10,7 +10,7 @@ resource "aws_lambda_function" "ec2_shutdown" {
   handler       = "ec2_shutdown.lambda_handler"
   runtime       = "python3.13"
   timeout       = 30
-  tags = var.common_tags
+  tags          = var.common_tags
 
   filename         = data.archive_file.lambda_zip.output_path
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
