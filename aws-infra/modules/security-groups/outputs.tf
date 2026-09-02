@@ -14,6 +14,10 @@ output "alb_sg_id" {
   value = aws_security_group.alb.id
 }
 
+output "k8s_sg_id" {
+  value = aws_security_group.k8s.id
+}
+
 output "jenkins_sg_id" {
   value = aws_security_group.jenkins.id
 }
