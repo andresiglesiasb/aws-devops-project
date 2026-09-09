@@ -5,6 +5,7 @@
 ## Objective
 
 Configure auto-shutdown for your EC2 instances using AWS Lambda and EventBridge. This helps to avoid unnecessary usage charges by stopping instances automatically at a set time.
+
 ---
 
 ## Requirements
@@ -37,6 +38,7 @@ Configure auto-shutdown for your EC2 instances using AWS Lambda and EventBridge.
 - **Role name:** `lambda-ec2-shutdown-role`
 
 ![lambda-role2](../../assets/LambdaRole2.png)
+
 ---
 
 ## B. Create the Lambda Function

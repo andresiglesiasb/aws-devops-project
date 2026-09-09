@@ -30,13 +30,13 @@ Jenkins pushes commit to GitOps repo
 
 ## Infrastructure Sizing
 
-Instalar ArgoCD despliega 7 pods nuevos en el clúster. Sumado al stack de monitorización (Prometheus, Grafana, node-exporter), el voting app con sus 5 microservicios y los propios componentes de k3s, una instancia **t2.micro o t3.micro** (1 GB de RAM) se queda sin recursos: el nodo empieza a responder lento, la API de Kubernetes deja de contestar y Alertmanager comienza a lanzar alertas de CPU alta.
+Installing ArgoCD deploys 7 new pods on the cluster. Combined with the monitoring stack (Prometheus, Grafana, node-exporter), the voting app with its 5 microservices, and the k3s components themselves, a **t2.micro or t3.micro** instance (1 GB RAM) runs out of resources: the node starts responding slowly, the Kubernetes API stops answering, and Alertmanager begins firing high-CPU alerts.
 
-Durante el lab realizamos dos ajustes para resolverlo:
+During the lab we made two adjustments to fix this:
 
-**1 — Swap de 2 GB en el nodo de Kubernetes**
+**1 — 2 GB swap on the Kubernetes node**
 
-Añadimos un fichero de swap de 2 GB para que el sistema operativo pueda mover a disco partes de memoria que no se estén usando activamente. Esto evita que los procesos mueran por falta de RAM cuando hay picos de carga, aunque no es un sustituto de tener suficiente memoria real:
+We added a 2 GB swap file so the OS can move memory pages that aren't actively in use to disk. This prevents processes from being killed for lack of RAM during load spikes, although it's not a substitute for having enough real memory:
 
 ```bash
 sudo fallocate -l 2G /swapfile
@@ -46,9 +46,9 @@ sudo swapon /swapfile
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 
-**2 — Redimensionado de la instancia a t3.medium**
+**2 — Resizing the instance to t3.medium**
 
-Como solución definitiva, cambiamos el tipo de instancia de t2/t3.micro a **t3.medium** (2 vCPU, 4 GB RAM) desde la consola de AWS (parar instancia → Change Instance Type → arrancar). k3s guarda su estado en disco, así que todos los pods vuelven a levantarse solos tras el reinicio sin necesidad de reconfigurar nada. Con 4 GB el nodo tiene margen suficiente para ejecutar todo el stack cómodamente.
+As a permanent fix, we changed the instance type from t2/t3.micro to **t3.medium** (2 vCPU, 4 GB RAM) via the AWS console (stop instance → Change Instance Type → start). k3s persists its state to disk, so all pods come back up on their own after the restart with no reconfiguration needed. With 4 GB the node has enough headroom to run the whole stack comfortably.
 
 ---
 

@@ -3,6 +3,7 @@
 ## Objective
 
 Create a low-cost NAT Gateway using an EC2 instance in the public subnet to allow instances in the private subnet to access the internet — avoiding the paid NAT Gateway service. All is included in the free tier.
+
 ---
 
 ## Requirements

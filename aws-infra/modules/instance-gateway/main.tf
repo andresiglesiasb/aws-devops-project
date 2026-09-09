@@ -10,7 +10,7 @@ resource "aws_instance" "nat" {
   tags = merge(
     var.common_tags,
     {
-      Name = "dev-gateway-ec2"
+      Name = var.name
     }
   )
 
