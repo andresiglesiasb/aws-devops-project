@@ -48,7 +48,7 @@ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
 **2 — Resizing the instance to t3.medium**
 
-As a permanent fix, we changed the instance type from t2/t3.micro to **t3.medium** (2 vCPU, 4 GB RAM) via the AWS console (stop instance → Change Instance Type → start). k3s persists its state to disk, so all pods come back up on their own after the restart with no reconfiguration needed. With 4 GB the node has enough headroom to run the whole stack comfortably.
+As a permanent fix, we changed the instance type from t3.micro to **t2.small** (2 vCPU, 4 GB RAM) via the AWS console (stop instance → Change Instance Type → start). k3s persists its state to disk, so all pods come back up on their own after the restart with no reconfiguration needed. With 4 GB the node has enough headroom to run the whole stack comfortably.
 
 ---
 
