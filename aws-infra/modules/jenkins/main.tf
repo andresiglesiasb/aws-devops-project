@@ -12,22 +12,25 @@
 # -----------------------------------------------------------------------------
 
 resource "aws_instance" "jenkins" {
-  ami = "ami-01f23391a59163da9"
-  instance_type = "t2.micro"
-  key_name = "dev-key-bastion"
-  subnet_id = var.dev_private_subnet_id_1a
+  ami                         = var.ami_id
+  instance_type               = "t2.micro"
+  key_name                    = "dev-key-bastion"
+  subnet_id                   = var.dev_private_subnet_id_1a
   associate_public_ip_address = false
-  vpc_security_group_ids = [var.jenkins_sg_id]
+  vpc_security_group_ids      = [var.jenkins_sg_id]
 
   user_data = file("${path.module}/user_data_jenkins.sh")
 
   root_block_device {
-    volume_size = 20
-    volume_type = "gp3"
+    volume_size           = 20
+    volume_type           = "gp3"
     delete_on_termination = true
   }
 
-  tags = {
-    Name = "dev-jenkins-ec2"
-  }
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "dev-jenkins-ec2"
+    }
+  )
 }

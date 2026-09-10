@@ -74,6 +74,7 @@ Grafana is now accessible at: `http://<ALB_DNS>/grafana/`
 6. (Optional) Change password: Click your user icon and change password, fill it.
 
 ![password-grafana](../../assets/phase4-grafana-password.png)
+
 ---
 
 ## D. Create Dashboard

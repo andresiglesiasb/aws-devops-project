@@ -142,8 +142,6 @@ Open in your browser:
 | `http://vote.local:8080` | Voting interface |
 | `http://result.local:8080` | Live results |
 
-![voting-app-ingress-browser](../../assets/phase5-ingress-browser.png)
-
 Or test from the terminal:
 
 ```bash
