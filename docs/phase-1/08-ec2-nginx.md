@@ -5,6 +5,7 @@
 ## Objective
 
 Create an instance in the private subnet and install nginx in it.
+
 ---
 
 ## Requirements

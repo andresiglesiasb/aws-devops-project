@@ -1,3 +1,5 @@
+# Phase 2 - Step 3: Declarative Pipeline
+
 ## Objective
 Implement a "Pipeline as Code" workflow. Instead of manually configuring steps in the Jenkins UI, we will define the build, test, and deploy logic in a `Jenkinsfile` stored in a GitHub repository.
 
