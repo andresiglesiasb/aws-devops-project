@@ -31,7 +31,7 @@ module "security-groups" {
 
 module "bastion" {
   source                  = "./modules/bastion"
-  ami_id                  = "ami-01f23391a59163da9"
+  ami_id                  = var.ami_id
   bastion_sg_id           = module.security-groups.bastion_sg_id
   dev_public_subnet_id_1a = module.vpc.dev_public_subnet_id_1a
 
@@ -54,7 +54,7 @@ module "auto-shutdown" {
 
 module "nat_ec2_gateway" {
   source            = "./modules/instance-gateway"
-  ami_id            = "ami-01f23391a59163da9"
+  ami_id            = var.ami_id
   subnet_id         = module.vpc.dev_public_subnet_id_1a
   security_group_id = module.security-groups.gateway_sg_id
   key_name          = "dev-key"
@@ -79,7 +79,7 @@ resource "aws_route" "private_nat_route" {
 
 module "jenkins" {
   source                   = "./modules/jenkins"
-  ami_id                   = "ami-01f23391a59163da9"
+  ami_id                   = var.ami_id
   jenkins_sg_id            = module.security-groups.jenkins_sg_id
   dev_private_subnet_id_1a = module.vpc.dev_private_subnet_id_1a
 
@@ -92,7 +92,7 @@ module "jenkins" {
 
 module "nginx" {
   source                   = "./modules/nginx"
-  ami_id                   = "ami-01f23391a59163da9"
+  ami_id                   = var.ami_id
   nginx_sg_id              = module.security-groups.nginx_private_sg_id
   dev_private_subnet_id_1a = module.vpc.dev_private_subnet_id_1a
   jenkins_private_ip       = module.jenkins.jenkins_private_ip
@@ -106,7 +106,7 @@ module "nginx" {
 
 module "k8s" {
   source                   = "./modules/k8s"
-  ami_id                   = "ami-01f23391a59163da9"
+  ami_id                   = var.ami_id
   k8s_sg_id                = module.security-groups.k8s_sg_id
   dev_private_subnet_id_1a = module.vpc.dev_private_subnet_id_1a
 

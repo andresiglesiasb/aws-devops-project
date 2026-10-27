@@ -40,19 +40,13 @@ resource "aws_iam_user" "devops_student" {
   tags          = var.common_tags
 }
 
-#Console access for User
-resource "aws_iam_user_login_profile" "login_profile" {
-  user                    = aws_iam_user.devops_student.name
-  password_reset_required = true
-}
+# Deliberately NOT created here: aws_iam_access_key and aws_iam_user_login_profile.
+# Both write their secret (access key secret / console password) to terraform.tfstate
+# in plain text, even when the output is marked sensitive. Create credentials out of
+# band (console / `aws iam create-access-key`) or use a secrets manager instead.
 
 # Add User to Group
 resource "aws_iam_user_group_membership" "group_membership" {
   user   = aws_iam_user.devops_student.name
   groups = [aws_iam_group.devops_student_group.name]
-}
-
-# Access Key for User
-resource "aws_iam_access_key" "access_key" {
-  user = aws_iam_user.devops_student.name
 }

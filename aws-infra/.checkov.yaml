@@ -1,0 +1,34 @@
+# Findings accepted on purpose: this is a free-tier learning lab, not production.
+framework:
+  - terraform
+skip-check:
+  # Network / cost decisions
+  - CKV_AWS_88    # bastion and NAT instance need a public IP by design
+  - CKV_AWS_130   # public subnets assign public IPs (bastion, NAT)
+  - CKV_AWS_382   # open egress: private instances reach the internet through the NAT instance
+  - CKV_AWS_260   # ALB listens on port 80 from anywhere (no certificate / domain in the lab)
+  - CKV_AWS_2     # ALB is HTTP-only: no domain, so no ACM certificate
+  - CKV_AWS_103   # no TLS listener, see above
+  - CKV_AWS_378   # target group uses HTTP behind the ALB
+  - CKV2_AWS_20   # no HTTPS listener to redirect to
+  - CKV2_AWS_28   # WAF costs money
+  - CKV_AWS_91    # ALB access logs need an S3 bucket
+  - CKV_AWS_131   # ALB header dropping, not needed for the lab
+  - CKV_AWS_150   # ALB deletion protection would block terraform destroy
+  - CKV2_AWS_11   # VPC flow logs cost money
+  - CKV2_AWS_12   # default security group is not used by any resource
+  - CKV_AWS_23    # SG rules are documented in docs/phase-1, not in descriptions
+  - CKV2_AWS_5    # some SGs are attached through module outputs, not visible to the scan
+  # EC2
+  - CKV_AWS_79    # IMDSv1 left enabled; candidate to harden (http_tokens = "required")
+  - CKV_AWS_126   # detailed monitoring costs money
+  - CKV_AWS_135   # t2 instances do not support EBS optimization
+  - CKV2_AWS_41   # instances have no AWS API needs, so no instance profile
+  # Lambda (auto-shutdown only)
+  - CKV_AWS_50    # X-Ray tracing not needed
+  - CKV_AWS_115   # concurrency limit not needed for a daily job
+  - CKV_AWS_116   # DLQ not needed for a daily job
+  - CKV_AWS_117   # running the Lambda inside the VPC would need a NAT
+  - CKV_AWS_272   # code signing not needed for a lab
+  # IAM
+  - CKV_AWS_273   # single IAM user instead of SSO / Identity Center
