@@ -1,18 +1,8 @@
 # -------------------------------
 # IAM OUTPUTS
 # -------------------------------
-output "access_key_id" {
-  value = module.iam.access_key_id
-}
-
-output "secret_access_key" {
-  value     = module.iam.secret_access_key
-  sensitive = true # Ensures that sensitive information is not displayed in the CLI or logs.
-}
-
-output "console_password" {
-  value     = module.iam.console_password
-  sensitive = true # Ensures that sensitive information is not displayed in the CLI or logs.
+output "iam_user_name" {
+  value = module.iam.user_name
 }
 
 # -------------------------------

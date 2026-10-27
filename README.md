@@ -40,6 +40,8 @@ Every phase is documented step by step in [`docs/`](docs/) — including the arc
 - [The Journey — Phase by Phase](#the-journey--phase-by-phase)
 - [Architecture Evolution](#architecture-evolution)
 - [Tech Stack](#tech-stack)
+- [CI](#ci)
+- [Lessons Learned](#lessons-learned)
 - [Roadmap](#roadmap)
 
 ---
@@ -104,6 +106,24 @@ The single app is replaced with a 5-service distributed app (vote / result / wor
 **Containers & Orchestration** — Docker, Kubernetes (K3s)
 **Networking** — Nginx (reverse proxy & ingress), custom EC2-based NAT
 **Observability** — Prometheus, Grafana, Loki, Promtail, Alertmanager
+
+---
+
+## CI
+
+[`.github/workflows/terraform.yml`](.github/workflows/terraform.yml) is a GitHub Actions workflow that runs `terraform fmt -check`, `validate`, `tflint` and `checkov` on every change to `aws-infra/`. It needs no AWS credentials.
+
+---
+
+## Lessons Learned
+
+Things that went wrong along the way and what I took from them:
+
+1. **Cost.** I wanted to stay inside the free tier, so I set up low-budget alarms that fire early. They paid off: the ALB tripped them a couple of times because of the hours it had been running. That is also why the auto-shutdown Lambda exists. Lesson: set the budget alarms before building anything, and treat always-on resources (ALB, NAT) as the expensive ones.
+2. **The Kubernetes node kept freezing from lack of memory** ([Phase 5 · ArgoCD](docs/phase-5/04-argocd.md#infrastructure-sizing)). With ArgoCD on top of the monitoring stack and the app, the k3s API stopped answering. My routine was: reboot the node, read the logs to confirm it was memory, and only then scale up the instance (2 GB swap first, then `t3.medium`). Lesson: size for the whole stack, and swap buys time, not capacity.
+3. **Not every pod was being scraped by Prometheus** ([Phase 5 · Observability](docs/phase-5/06-observability.md#e-verify-prometheus-is-scraping-the-exporters)). I assumed the sidecars covered all the containers, but they only exist for `redis` and `db` (exporters). `vote`, `result` and `worker` expose no `/metrics` and have no scrape job, so for them I only had logs. Lesson: check the Prometheus targets page instead of assuming, and remember that a sidecar only exposes what its own exporter knows about.
+4. **A Jenkinsfile `sed` that would have broken multi-container pods** ([Phase 4 · Instrumentation](docs/phase-4/04-app-instrumentation.md#e-fix-jenkinsfile-sed-command)). Replacing every `image:` line overwrote the sidecar image too. Lesson: scope text-based edits tightly, or use a structured tool (`yq`, `kustomize edit`).
+5. **Mini GameDay: killing a pod under load** ([Phase 4 · GameDay](docs/phase-4/07-gameday.md)). Self-healing worked in about 20 s, but no alert fired because the incident was shorter than the rule's `for: 2m`. Lesson: alert thresholds decide what you actually notice, so test them.
 
 ---
 
