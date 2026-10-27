@@ -42,5 +42,5 @@ jobs:
         uses: bridgecrewio/checkov-action@v12
         with:
           directory: aws-infra
-          framework: terraform
+          config_file: aws-infra/.checkov.yaml
           soft_fail: true # lab environment: report findings without blocking
